@@ -185,6 +185,10 @@ typedef enum {
     if ([self.leftMenu.slideMenuDataSource respondsToSelector:@selector(slideOutAnimationDuration)]) {
         duration = [self.leftMenu.slideMenuDataSource slideOutAnimationDuration];
     }
+    if (self.nextTransitionNoSlideIn) {
+        duration = 0;
+    }
+    
     [UIView animateWithDuration:duration delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         [self slideOut:self.selectedContent];
     } completion:^(BOOL finished) {
@@ -207,6 +211,9 @@ typedef enum {
     CGFloat duration = kSlideInInterval;
     if ([self.leftMenu.slideMenuDataSource respondsToSelector:@selector(slideInAnimationDuration)]) {
         duration = [self.leftMenu.slideMenuDataSource slideInAnimationDuration];
+    }
+    if (self.nextTransitionNoSlideIn) {
+        duration = 0;
     }
     
     [UIView animateWithDuration:duration delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
@@ -446,6 +453,9 @@ typedef enum {
             [self.selectedContent willMoveToParentViewController:nil];
             [self.selectedContent.view removeFromSuperview];
             [self.selectedContent removeFromParentViewController];
+            if ( !self.nextTransitionNoSlideIn ) {
+                [self slideToSide:content];
+            }
             [self slideToSide:content];
             [self addChildViewController:content];
             [self.view addSubview:content.view];
@@ -458,6 +468,8 @@ typedef enum {
                 self.view.userInteractionEnabled = YES;
             }];
         }
+        //next transition we want slide in as per default behavior
+        self.nextTransitionNoSlideIn = NO;
         
     }else{
         [self.selectedContent willMoveToParentViewController:nil];

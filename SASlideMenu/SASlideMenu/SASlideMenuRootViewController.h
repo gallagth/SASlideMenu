@@ -21,6 +21,8 @@
 
 @property (nonatomic,strong) IBOutlet UIView* menuView;
 
+@property(nonatomic, assign) Boolean nextTransitionNoSlideIn;
+
 -(void) switchToContentViewController:(UINavigationController*) content completion:(void (^)(void))completion;
 -(void) addContentViewController:(UIViewController*) content withIndexPath:(NSIndexPath*)indexPath;
 

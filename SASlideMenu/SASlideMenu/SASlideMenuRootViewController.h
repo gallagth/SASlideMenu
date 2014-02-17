@@ -15,7 +15,7 @@
 
 
 @property (nonatomic,strong) SASlideMenuViewController* leftMenu;
-@property (nonatomic,strong) UIViewController* rightMenu;
+@property (nonatomic,strong) SASlideMenuViewController* rightMenu;
 @property (nonatomic,assign) Boolean isRightMenuEnabled;
 @property (nonatomic,strong) SASlideMenuNavigationController* navigationController;
 

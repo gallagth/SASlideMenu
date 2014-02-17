@@ -151,13 +151,13 @@ typedef enum {
 }
 
 -(void) doSlideToLeftSide{
-    if ([self.leftMenu.slideMenuDelegate respondsToSelector:@selector(slideMenuWillSlideToLeft:)]){
-        [self.leftMenu.slideMenuDelegate slideMenuWillSlideToLeft:self.selectedContent];
+    if ([self.rightMenu.slideMenuDelegate respondsToSelector:@selector(slideMenuWillSlideOut:)]){
+        [self.rightMenu.slideMenuDelegate slideMenuWillSlideOut:self.selectedContent];
     }
     [self disableGestureRecognizers];
     CGFloat duration = kSlideInInterval;
-    if ([self.leftMenu.slideMenuDataSource respondsToSelector:@selector(slideInAnimationDuration)]) {
-        duration = [self.leftMenu.slideMenuDataSource slideInAnimationDuration];
+    if ([self.rightMenu.slideMenuDataSource respondsToSelector:@selector(slideInAnimationDuration)]) {
+        duration = [self.rightMenu.slideMenuDataSource slideInAnimationDuration];
     }
 
     [UIView animateWithDuration:duration
@@ -168,8 +168,8 @@ typedef enum {
                      }
                      completion:^(BOOL finished) {
                          [self completeSlideToLeftSide:self.selectedContent];
-                         if ([self.leftMenu.slideMenuDelegate respondsToSelector:@selector(slideMenuDidSlideToLeft:)]){
-                             [self.leftMenu.slideMenuDelegate slideMenuDidSlideToLeft:self.selectedContent];
+                         if ([self.rightMenu.slideMenuDelegate respondsToSelector:@selector(slideMenuDidSlideOut:)]){
+                             [self.rightMenu.slideMenuDelegate slideMenuDidSlideOut:self.selectedContent];
                          }
                          [self enableGestureRecognizers];
                      }];
@@ -206,6 +206,9 @@ typedef enum {
     if ([self.leftMenu.slideMenuDelegate respondsToSelector:@selector(slideMenuWillSlideIn:)]){
         [self.leftMenu.slideMenuDelegate slideMenuWillSlideIn:self.selectedContent];
     }
+    if([self.rightMenu.slideMenuDelegate respondsToSelector:@selector(slideMenuWillSlideIn:)]) {
+        [self.rightMenu.slideMenuDelegate slideMenuWillSlideIn:self.selectedContent];
+    }
     [self disableGestureRecognizers];
 
     CGFloat duration = kSlideInInterval;
@@ -229,6 +232,9 @@ typedef enum {
         [self completeSlideIn:self.selectedContent];
         if ([self.leftMenu.slideMenuDelegate respondsToSelector:@selector(slideMenuDidSlideIn:)]){
             [self.leftMenu.slideMenuDelegate slideMenuDidSlideIn:self.selectedContent];
+        }
+        if([self.rightMenu.slideMenuDelegate respondsToSelector:@selector(slideMenuDidSlideIn:)]) {
+            [self.rightMenu.slideMenuDelegate slideMenuDidSlideIn:self.selectedContent];
         }
         [self enableGestureRecognizers];
     }];
